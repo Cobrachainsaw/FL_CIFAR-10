@@ -21,7 +21,7 @@ services:
     networks:
       - flotta
     ports:
-     - 15432:5432
+     - 5432:5432
 
   server: 
     image: idsia.flotta
@@ -29,7 +29,7 @@ services:
     restart: unless-stopped
     environment:
       - flotta_NODE_HOST=server
-      - DATABASE_HOST=database
+      - DATABASE_HOST=flotta_database
       - DATABASE_PORT=5432
       - DATABASE_USER=${DATABASE_USER?Missing DATABASE_USER for server}
       - DATABASE_PASSWORD=${DATABASE_PASS?Missing DATABASE_PASS for server}

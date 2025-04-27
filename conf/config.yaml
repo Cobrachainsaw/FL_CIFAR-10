@@ -24,13 +24,14 @@ database:
   username: ${DATABASE_USER?Missing DATABASE_USER for server}
   password: ${DATABASE_PASS?Missing DATABASE_PASS for server}
   scheme: ${DATABASE_SCHEMA?Missing DATABASE_SCHEMA for server}
-  dialect: postgres   # Changed to postgres to match your docker-compose service
-  host: flotta-database   # Updated to match the database container name in Docker Compose
+  dialect: postgresql   # Changed to postgres to match your docker-compose service
+  host: flotta_database   # Updated to match the database container name in Docker Compose
+  port: 5432
   memory: False
 
 datasources:
   - name: CIFAR-10
     type: csv
-    path: "/flotta/data"  # Updated to match the mounted path in Docker Compose
+    path: "/flotta/data/server_public_test.csv"  # Updated to match the mounted path in Docker Compose
     kind: file
     token: 58981bcbab77ef4b8e01207134c38873e0936a9ab88cd76b243a2e2c85390b94
