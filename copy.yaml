@@ -1,0 +1,47 @@
+  client3:
+    image: idsia.flotta
+    container_name: client3
+    restart: unless-stopped
+    environment:
+      - flotta_NODE_HOST=server
+    volumes: 
+      - client-3-data:/flotta/storage
+      - ./conf/client3.yaml:/flotta/config.yaml
+      - ./clients_data/client_3.csv:/flotta/data
+      - /dev/shm:/dev/shm # this is for ray
+    networks:
+      - flotta
+    depends_on:
+      - server
+
+  client4:
+    image: idsia.flotta
+    container_name: client4
+    restart: unless-stopped
+    environment:
+      - flotta_NODE_HOST=server
+    volumes: 
+      - client-4-data:/flotta/storage
+      - ./conf/client4.yaml:/flotta/config.yaml
+      - ./clients_data/client_4.csv:/flotta/data
+      - /dev/shm:/dev/shm # this is for ray
+    networks:
+      - flotta
+    depends_on:
+      - server
+
+  client5:
+    image: idsia.flotta
+    container_name: client5
+    restart: unless-stopped
+    environment:
+      - flotta_NODE_HOST=server
+    volumes: 
+      - client-5-data:/flotta/storage
+      - ./conf/client5.yaml:/flotta/config.yaml
+      - ./clients_data/client_5.csv:/flotta/data
+      - /dev/shm:/dev/shm # this is for ray
+    networks:
+      - flotta
+    depends_on:
+      - server 

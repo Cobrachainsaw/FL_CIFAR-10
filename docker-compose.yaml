@@ -1,0 +1,97 @@
+networks:
+  flotta:
+
+volumes:
+  db-data:
+  server-data:
+  client-1-data:
+  client-2-data:
+
+services:
+
+  database:
+    image: postgres
+    container_name: flotta_database
+    environment:
+      - POSTGRES_USER=${DATABASE_USER?Missing DATABASE_USER for database}
+      - POSTGRES_PASSWORD=${DATABASE_PASS?Missing DATABASE_PASS for database}
+      - POSTGRES_DB=${DATABASE_SCHEMA?Missing DATABASE_SCHEMA for database}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - flotta
+    ports:
+     - 15432:5432
+
+  server: 
+    image: idsia.flotta
+    container_name: server
+    restart: unless-stopped
+    environment:
+      - flotta_NODE_HOST=server
+      - DATABASE_HOST=database
+      - DATABASE_PORT=5432
+      - DATABASE_USER=${DATABASE_USER?Missing DATABASE_USER for server}
+      - DATABASE_PASSWORD=${DATABASE_PASS?Missing DATABASE_PASS for server}
+      - DATABASE_SCHEMA=${DATABASE_SCHEMA?Missing DATABASE_SCHEMA for server}
+    volumes:
+      - server-data:/flotta/storage
+      - C:/Users/vinay/OneDrive/Documents/GitHub/FL_CIFAR-10/conf/config.yaml:/flotta/config.yaml
+      - C:/Users/vinay/OneDrive/Documents/GitHub/FL_CIFAR-10/server_public_data:/flotta/data
+      - /dev/shm:/dev/shm # this is for ray
+    networks:
+      - flotta
+    ports:
+      - 1456:1456
+    depends_on:
+      - database
+    shm_size: '2gb'  # Increased shared memory size for Ray
+    deploy:
+      resources:
+        limits:
+          cpus: '2'        # Set CPU limits (adjust as needed)
+          memory: 4G        # Set memory limits (adjust as needed)
+
+  client1:
+    image: idsia.flotta
+    container_name: client1
+    restart: unless-stopped
+    environment:
+      - flotta_NODE_HOST=server
+    volumes: 
+      - client-1-data:/flotta/storage
+      - C:/Users/vinay/OneDrive/Documents/GitHub/FL_CIFAR-10/conf/client1.yaml:/flotta/config.yaml
+      - C:/Users/vinay/OneDrive/Documents/GitHub/FL_CIFAR-10/clients_data/client1:/flotta/data
+      - /dev/shm:/dev/shm # this is for ray
+    networks:
+      - flotta
+    depends_on:
+      - server
+    shm_size: '2gb'  # Increased shared memory size for Ray
+    deploy:
+      resources:
+        limits:
+          cpus: '1'        # Set CPU limits (adjust as needed)
+          memory: 2G        # Set memory limits (adjust as needed)
+
+  client2:
+    image: idsia.flotta
+    container_name: client2
+    restart: unless-stopped
+    environment:
+      - flotta_NODE_HOST=server
+    volumes: 
+      - client-2-data:/flotta/storage
+      - C:/Users/vinay/OneDrive/Documents/GitHub/FL_CIFAR-10/conf/client2.yaml:/flotta/config.yaml
+      - C:/Users/vinay/OneDrive/Documents/GitHub/FL_CIFAR-10/clients_data/client2:/flotta/data
+      - /dev/shm:/dev/shm # this is for ray
+    networks:
+      - flotta
+    depends_on:
+      - server
+    shm_size: '2gb'  # Increased shared memory size for Ray
+    deploy:
+      resources:
+        limits:
+          cpus: '1'        # Set CPU limits (adjust as needed)
+          memory: 2G        # Set memory limits (adjust as needed)
