@@ -21,12 +21,12 @@ join:
   first: True
 
 database:
-  username: ${DATABASE_USER?Missing DATABASE_USER for server}
-  password: ${DATABASE_PASS?Missing DATABASE_PASS for server}
-  scheme: ${DATABASE_SCHEMA?Missing DATABASE_SCHEMA for server}
+  username: "${DATABASE_USER}"
+  password: "${DATABASE_PASS}"
+  scheme: "${DATABASE_SCHEMA}"
   dialect: postgresql   # Changed to postgres to match your docker-compose service
-  host: flotta_database   # Updated to match the database container name in Docker Compose
-  port: 5432
+  host: "${DATABASE_HOST}"   # Updated to match the database container name in Docker Compose
+  port: ${DATABASE_PORT}
   memory: False
 
 datasources:

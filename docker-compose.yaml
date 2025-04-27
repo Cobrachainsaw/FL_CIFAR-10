@@ -13,9 +13,9 @@ services:
     image: postgres
     container_name: flotta_database
     environment:
-      - POSTGRES_USER=${DATABASE_USER?Missing DATABASE_USER for database}
-      - POSTGRES_PASSWORD=${DATABASE_PASS?Missing DATABASE_PASS for database}
-      - POSTGRES_DB=${DATABASE_SCHEMA?Missing DATABASE_SCHEMA for database}
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASS}
+      - POSTGRES_DB=${DATABASE_SCHEMA}
     volumes:
       - db-data:/var/lib/postgresql/data
     networks:
@@ -31,9 +31,9 @@ services:
       - flotta_NODE_HOST=server
       - DATABASE_HOST=flotta_database
       - DATABASE_PORT=5432
-      - DATABASE_USER=${DATABASE_USER?Missing DATABASE_USER for server}
-      - DATABASE_PASSWORD=${DATABASE_PASS?Missing DATABASE_PASS for server}
-      - DATABASE_SCHEMA=${DATABASE_SCHEMA?Missing DATABASE_SCHEMA for server}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASS}
+      - DATABASE_SCHEMA=${DATABASE_SCHEMA}
     volumes:
       - server-data:/flotta/storage
       - C:/Users/vinay/OneDrive/Documents/GitHub/FL_CIFAR-10/conf/config.yaml:/flotta/config.yaml
