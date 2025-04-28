@@ -9,8 +9,6 @@ node:
   token_projects_initial:
     - name: california_clients
       token: 58981bcbab77ef4b8e01207134c38873e0936a9ab88cd76b243a2e2c85390b94
-    - name: california_nodes
-      token: e0936a9ab88cd76b243a2e2c85390b9458981bcbab77ef4b8e01207134c38873
 
   protocol: http
   interface: 0.0.0.0
@@ -21,11 +19,11 @@ join:
   first: True
 
 database:
-  username: "${DATABASE_USER}"
-  password: "${DATABASE_PASS}"
-  scheme: "${DATABASE_SCHEMA}"
+  username: ${DATABASE_USER}
+  password: ${DATABASE_PASS}
+  scheme: ${DATABASE_SCHEMA}
   dialect: postgresql   # Changed to postgres to match your docker-compose service
-  host: "${DATABASE_HOST}"   # Updated to match the database container name in Docker Compose
+  host: ${DATABASE_HOST}   # Updated to match the database container name in Docker Compose
   port: ${DATABASE_PORT}
   memory: False
 

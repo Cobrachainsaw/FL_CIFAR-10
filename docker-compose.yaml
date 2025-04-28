@@ -32,7 +32,7 @@ services:
       - DATABASE_HOST=flotta_database
       - DATABASE_PORT=5432
       - DATABASE_USER=${DATABASE_USER}
-      - DATABASE_PASSWORD=${DATABASE_PASS}
+      - DATABASE_PASS=${DATABASE_PASS}
       - DATABASE_SCHEMA=${DATABASE_SCHEMA}
     volumes:
       - server-data:/flotta/storage
